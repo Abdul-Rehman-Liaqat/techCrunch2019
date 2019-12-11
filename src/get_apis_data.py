@@ -1,9 +1,9 @@
 import requests
 from typing import Dict, Optional
 import os
+import pandas as pd
 
-
-def get_pollution(city: Optional[str]=None,location: Optional[Dict[str,float]] = None):
+def get_pollution_data(city: Optional[str]=None,location: Optional[Dict[str,float]] = None):
 
     def _append_api_token(url):
         return url + "/?token=" + os.getenv("POLLUTION_API_TOKEN")
@@ -18,5 +18,7 @@ def get_pollution(city: Optional[str]=None,location: Optional[Dict[str,float]] =
     else:
         return None
 
-print(get_pollution(city="Berlin"))
-print(get_pollution(location={"lat":52.554192,"long":13.344960}))
+
+
+def get_thryve_data(df_path:str):
+    return pd.read_csv(df_path)
