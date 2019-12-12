@@ -19,6 +19,11 @@ def get_pollution_data(city: Optional[str]=None,location: Optional[Dict[str,floa
         return None
 
 
+def get_weather_data(location: Dict[str,float]):
+    weather_api_url = "http://api.openweathermap.org/data/2.5/"
+    api_path = "forcast?lat={}&lon={}&appid={}".format(str(location["lat"]),str(location["long"]),os.getenv("WEATHER_API_TOKEN"))
+    print(weather_api_url + api_path)
+    return requests.get(weather_api_url + api_path).json()
 
 def get_thryve_data(df_path:str):
     return pd.read_csv(df_path)
