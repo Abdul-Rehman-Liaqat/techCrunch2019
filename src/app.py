@@ -102,10 +102,17 @@ app.layout = html.Div(style={'backgroundColor': 'white', 'textAlign': 'center'},
     [dash.dependencies.Input('button', 'n_clicks')],
     [dash.dependencies.State('input-box', 'value')])
 def update_output(n_clicks, value):
-    return 'The input value was "{}" and the button has been clicked {} times'.format(
-        value,
-        n_clicks
-    )
+    return get_recommendations()
+
+
+def get_recommendations():
+    recommendation = ("The weather is humid and cold today. You will not see much sunlight\n"+
+        "Try wearing winter jacket with neck muffler\n"+
+        "You had 6 hours sleep which is less for you so try drinking tea too\n"+
+        "AQI index is high today and exercising indoor is recommended\n"+
+        "With the data for past few days, you seem a bit stressed. How about a round of Meditation\n"+
+                          "I can schedule one for you")
+    return recommendation
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0',debug=True)
