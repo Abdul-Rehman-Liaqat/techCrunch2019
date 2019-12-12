@@ -11,25 +11,96 @@ from flask_restplus import Resource, Api
 from flask import Flask, jsonify
 import time
 
-app = Flask(__name__)
-api = Api(app)
+# app = Flask(__name__)
+# api = Api(app)
 
 
+#
+# @api.route('/get_recommendations')
+# class Recommend(Resource):
+#     def get(self):
+#         recommendations = {
+#             "weather" : "The weather is humid and cold today. You will not see much sunlight",
+#             "clothes" : "Try wearing winter jacket with neck muffler",
+#             "Sleep"   : "You had 6 hours sleep which is less for you so try drinking tea too",
+#             "Pollution" : "AQI index is high today and exercising indoor is recommended",
+#             "Psychological" : "With the data for past few days, you seem a bit stressed. How about a round of Meditation"
+#                               "I can schedule one for you",
+#         }
+#         return jsonify(recommendations)
+#
+#
+# if __name__ == '__main__':
+#     app.run(host='127.0.0.1', port=5000, debug=True)
+# #    app.run(debug=True)
 
-@api.route('/get_recommendations')
-class Recommend(Resource):
-    def get(self):
-        recommendations = {
-            "weather" : "The weather is humid and cold today. You will not see much sunlight",
-            "clothes" : "Try wearing winter jacket with neck muffler",
-            "Sleep"   : "You had 6 hours sleep which is less for you so try drinking tea too",
-            "Pollution" : "AQI index is high today and exercising indoor is recommended",
-            "Psychological" : "With the data for past few days, you seem a bit stressed. How about a round of Meditation"
-                              "I can schedule one for you",
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
+
+app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
+    html.H1(
+        children='HealthSherpa',
+        style={
+            'textAlign': 'center',
+            'color': colors['text']
         }
-        return jsonify(recommendations)
+    ),
 
+    html.Div(children='Your Daily Health Partner', style={
+        'textAlign': 'center',
+        'color': colors['text']
+    }),
+
+    dcc.Graph(
+        figure=dict(
+            data=[
+                dict(
+                    x=[1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003,
+                       2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012],
+                    y=[16, 13, 10, 11, 28, 37, 43, 55, 56, 88, 105, 156, 270,
+                       299, 340, 403, 549, 499],
+                    name='HeartBeat',
+                    marker=dict(
+                        color='rgb(26, 118, 255)'
+                    )
+                )
+            ],
+            layout=dict(
+                title='Live HeartBeat',
+                showlegend=True,
+                legend=dict(
+                    x=0,
+                    y=1.0
+                ),
+                margin=dict(l=40, r=0, t=40, b=30)
+            )
+        ),
+        style={'height': 300},
+        id='my-graph'
+    ),
+
+    dcc.Graph(
+        id='Weather Forecast',
+        figure={
+            'data': [
+                {'x': [1, 2, 3], 'y': [4, 1, 2], 'type': 'bar', 'name': 'SF'},
+            ],
+            'layout': {
+                'title': 'Dash Data Visualization'
+            }
+        }
+    )
+])
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
-#    app.run(debug=True)
+    app.run_server(host='0.0.0.0',debug=True)
