@@ -47,19 +47,14 @@ colors = {
     'text': '#7FDBFF'
 }
 
-app.layout = html.Div(style={'backgroundColor': colors['background']}, children=[
-    html.H1(
-        children='HealthSherpa',
-        style={
-            'textAlign': 'center',
-            'color': colors['text']
-        }
-    ),
+app.layout = html.Div(style={'backgroundColor': 'white', 'textAlign': 'center'}, children=[
+    html.H1(children='HealthSherpa'),
+    html.Div(children='Your Daily Health Partner'),
 
-    html.Div(children='Your Daily Health Partner', style={
-        'textAlign': 'center',
-        'color': colors['text']
-    }),
+    html.Div(children='Recommendations', id='recommendations'),
+    html.Div(dcc.Input(id='input-box', type='text')),
+    html.Button('Submit', id='button'),
+    html.Div(id='output-container-button',children='Enter a value and press submit'),
 
     dcc.Graph(
         figure=dict(
@@ -101,6 +96,16 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, children=
         }
     )
 ])
+
+@app.callback(
+    dash.dependencies.Output('output-container-button', 'children'),
+    [dash.dependencies.Input('button', 'n_clicks')],
+    [dash.dependencies.State('input-box', 'value')])
+def update_output(n_clicks, value):
+    return 'The input value was "{}" and the button has been clicked {} times'.format(
+        value,
+        n_clicks
+    )
 
 if __name__ == '__main__':
     app.run_server(host='0.0.0.0',debug=True)
