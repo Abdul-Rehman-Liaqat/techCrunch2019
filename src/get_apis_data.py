@@ -23,7 +23,6 @@ def get_pollution_data(city: Optional[str]=None,location: Optional[Dict[str,floa
 def get_weather_data(location: Dict[str,float]):
     weather_api_url = "https://api.darksky.net/forecast/"
     api_path = "{api_key}/{lat},{long}".format(lat=str(location["lat"]),long=str(location["long"]),api_key=os.getenv("WEATHER_API_TOKEN"))
-    print(weather_api_url + api_path)
     return requests.get(weather_api_url + api_path).json()
 
 

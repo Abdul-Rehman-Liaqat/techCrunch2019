@@ -16,26 +16,18 @@ api = Api(app)
 
 
 
-@api.route('/3-Grocery_Deals')
-class RecommendGroceryDeals(Resource):
+@api.route('/get_recommendations')
+class Recommend(Resource):
     def get(self):
-        time.sleep(2)
-        data = {}
-        all_item = {}
-        data['1-Market'] = 'Kaufland Berlin-Tempelhof'
-        data['Product'] = 'Hinterschinken'
-        data['2-Actual_price'] = '1.49'
-        data['4-Discount'] = '0.74'
-        data['3-Discounted_price'] = '0.74'
-        all_item[data['Product']] = data
-        data = {}
-        data['1-Market'] = 'Kaufland Berlin-Tempelhof'
-        data['Product'] = 'Eier'
-        data['2-Actual_price'] = '1.09'
-        data['4-Discount'] = '0.10'
-        data['3-Discounted_price'] = '0.94'
-        all_item[data['Product']] = data
-        return jsonify(all_item)
+        recommendations = {
+            "weather" : "The weather is humid and cold today. You will not see much sunlight",
+            "clothes" : "Try wearing winter jacket with neck muffler",
+            "Sleep"   : "You had 6 hours sleep which is less for you so try drinking tea too",
+            "Pollution" : "AQI index is high today and exercising indoor is recommended",
+            "Psychological" : "With the data for past few days, you seem a bit stressed. How about a round of Meditation"
+                              "I can schedule one for you",
+        }
+        return jsonify(recommendations)
 
 
 if __name__ == '__main__':
